@@ -1,0 +1,24 @@
+import numpy as np
+-------------------------------------------------------------
+conda install pandas-datareader
+-------------------------------------------------------------
+import pandas_datareader as pdr
+import datetime as dt
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+-------------------------------------------------------------
+TICKERS = ['AAPL', 'MSFT', 'TWTR', 'IBM', '^GSPC']
+start = dt.datetime(2015, 12, 1)
+end = dt.datetime(2021, 1, 1)
+data = pdr.get_data_yahoo(TICKERS, start, end, interval="m")
+data.head()
+-------------------------------------------------------------
+LOG_RETURNS = np.log(data/data.shift())
+LOG_RETURNS
+-------------------------------------------------------------
+cov = LOG_RETURNS.cov()
+var = LOG_RETURNS['^GSPC'].var()
+var
+cov.loc['AAPL', '^GSPC']/var
+cov.loc['^GSPC']/var
+-------------------------------------------------------------
