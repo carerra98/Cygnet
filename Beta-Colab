@@ -1,0 +1,10 @@
+!pip install yfinance
+import yfinance as yf
+data = yf.download("AAPL AMZN GOOG TSLA IBM META GOOG NIO PATH PACB ETSY SQ SPOT CRWD DOCU GMED VRNT FVRR KNSL APPN ^GSPC", period="5y", interval="1mo")
+import numpy as np
+data = data['Adj Close']
+log_returns = np.log(data/data.shift())
+cov = log_returns.cov()
+var = log_returns['^GSPC'].var()
+cov.loc['AAPL', '^GSPC']/var
+cov.loc['^GSPC']/var
